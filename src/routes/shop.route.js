@@ -18,4 +18,4 @@ const addShop = (app) => {
 const delShop = (app) => {
     app.delete('/fms/api/v1/delShop', deleteShop);
 }
-module.exports =  { addShop, getShopsbyLocality, getShopsbyCategory, getShopsbyRating, updateShop, delShop }
+module.exports = { addShop, getShopsbyLocality, getShopsbyCategory, getShopsbyRating, updateShop, delShop }

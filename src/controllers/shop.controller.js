@@ -1,5 +1,5 @@
 const shopModel = require('../models/shop.model');
-const {shopObject, ratingComparisionCOnstants} = require('../utils/shop.util');
+const { shopObject, ratingComparisionCOnstants } = require('../utils/shop.util');
 
 const addNewShop = async (req, res) => {
     try {
@@ -10,8 +10,8 @@ const addNewShop = async (req, res) => {
             address: req.body.address,
             zipcode: req.body.zipcode
         }
-        if(!shopObj.name || (!shopObj.categories || shopObj.categories.length === 0) || !shopObj.address || !shopObj.zipcode){
-            console.error("Error in addNewShop input request: "+JSON.stringify(shopObj));
+        if (!shopObj.name || (!shopObj.categories || shopObj.categories.length === 0) || !shopObj.address || !shopObj.zipcode) {
+            console.error("Error in addNewShop input request: " + JSON.stringify(shopObj));
             return res.status(400).send({
                 message: "Bad request"
             })
@@ -33,9 +33,9 @@ const addNewShop = async (req, res) => {
 const listShopsbyLocality = async (req, res) => {
     try {
         const queryParam = {};
-        if(req.query.zipcode){
+        if (req.query.zipcode) {
             queryParam['zipcode'] = req.query.zipcode;
-        }else{
+        } else {
             return res.status(400).send({
                 message: "Bad request"
             })
@@ -54,9 +54,9 @@ const listShopsbyCategory = async (req, res) => {
     try {
         const queryParam = {};
 
-        if(req.query.category && req.query.category.length > 0){
+        if (req.query.category && req.query.category.length > 0) {
             queryParam['categories'] = Array.isArray(req.query.category) ? req.query.category : [req.query.category];
-        }else{
+        } else {
             return res.status(400).send({
                 message: "Bad request"
             })
@@ -75,11 +75,11 @@ const listShopsbyCategory = async (req, res) => {
 const listShopsbyRating = async (req, res) => {
     try {
         const queryParam = {};
-        if(!req.query.rating || !req.query.logic || !ratingComparisionCOnstants[req.query.logic]){
+        if (!req.query.rating || !req.query.logic || !ratingComparisionCOnstants[req.query.logic]) {
             return res.status(400).send({
                 message: "Bad request"
             })
-        }else{
+        } else {
             let queryLogic = ratingComparisionCOnstants[req.query.logic];
             queryParam['rating'] = {};
             queryParam.rating[queryLogic] = req.query.rating;
@@ -97,8 +97,8 @@ const listShopsbyRating = async (req, res) => {
 
 const updateShopDetails = async (req, res) => {
     try {
-        if(req.body.id){
-            const shop = await shopModel.findOne({'id': req.body.id});
+        if (req.body.id) {
+            const shop = await shopModel.findOne({ 'id': req.body.id });
             shop.name = req.body.name || shop.name;
             shop.rating = req.body.rating || shop.rating;
             shop.address = req.body.address || shop.address;
@@ -109,7 +109,7 @@ const updateShopDetails = async (req, res) => {
                 message: "Shop details has been updated",
                 shop: shopObject(shop)
             })
-        }else{
+        } else {
             res.status(400).send({
                 message: "Bad request"
             })
@@ -125,27 +125,27 @@ const updateShopDetails = async (req, res) => {
 const deleteShop = async (req, res) => {
     try {
         const queryParam = {};
-        if(req.body.id){
-            queryParam['id']= req.body.id;
-        }else{
+        if (req.body.id) {
+            queryParam['id'] = req.body.id;
+        } else {
             return res.status(400).send({
                 message: "Bad request"
             })
         }
 
         const shop = await shopModel.findOne(queryParam);
-        if(!shop){
+        if (!shop) {
             res.status(500).send({
                 message: `Shop with id ${req.body.id} does not exists`
             })
-        }else{
+        } else {
             await shopModel.findOneAndDelete(queryParam);
             res.status(200).send({
                 message: `Shop details with id ${queryParam['id']} has been deleted successfully.`
-                
+
             })
         }
-       
+
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({

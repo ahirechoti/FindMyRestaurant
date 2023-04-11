@@ -2,38 +2,38 @@ const mongoose = require('mongoose');
 var min = [0, 'The value of path `{PATH}` ({VALUE}) is beneath the limit ({MIN}).'];
 var max = [5, 'The value of path `{PATH}` ({VALUE}) exceeds the limit ({MAX}).'];
 const shopSchema = mongoose.Schema({
-    id:{
+    id: {
         type: Number,
         required: true,
         unique: true
     },
     name: {
-       type: String,
-       required: true 
+        type: String,
+        required: true
     },
-    categories:{
+    categories: {
         type: [String],
-        enum:["Kids", "Men", "Women", "Ethnic", "Formals", "Casuals", "Sports"],
+        enum: ["Kids", "Men", "Women", "Ethnic", "Formals", "Casuals", "Sports"],
         required: true
     },
     rating: {
         type: Number,
         default: 0,
-        max : max,
+        max: max,
         min: min
     },
     address: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
-    zipcode:{
+    zipcode: {
         type: Number,
         required: true
     },
-    createdAt:{
+    createdAt: {
         type: Date,
-        default: () => {return Date.now()},
+        default: () => { return Date.now() },
         immutable: true
     }
 });

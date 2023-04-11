@@ -1,25 +1,25 @@
 const shopObject = (shops) => {
     let result = [];
     try {
-        
-        if(Array.isArray(shops)){
+
+        if (Array.isArray(shops)) {
             shops.forEach(shop => {
                 result.push({
                     id: shop.id,
                     name: shop.name,
-                    categories : shop.categories,
+                    categories: shop.categories,
                     rating: shop.rating,
                     address: shop.address,
                     zipcode: shop.zipcode,
                     createdAt: shop.createdAt
                 })
             })
-        }else{
+        } else {
             var shop = shops;
             result.push({
                 id: shop.id,
                 name: shop.name,
-                categories : shop.categories,
+                categories: shop.categories,
                 rating: shop.rating,
                 address: shop.address,
                 zipcode: shop.zipcode,
@@ -34,11 +34,11 @@ const shopObject = (shops) => {
 }
 const ratingComparisionCOnstants = {
     eq: "$eq",
-    gt : "$gt",
-    gte : "$gte",
+    gt: "$gt",
+    gte: "$gte",
     lt: "$lt",
     lte: "$lte",
-    noteq : "$ne"
+    noteq: "$ne"
 }
 module.exports = {
     shopObject, ratingComparisionCOnstants

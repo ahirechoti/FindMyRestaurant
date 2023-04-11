@@ -9,25 +9,27 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 4040;
-if(process.env.MONGOCLIENT){
+if (process.env.MONGOCLIENT) {
     mongoose.connect(process.env.MONGOCLIENT, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: 'FINDMYSHOPDB'
     });
     const db = mongoose.connection;
-    db.once('open', ()=>{
+    db.once('open', () => {
         console.log('Connected to MongoDB');
     });
-    db.on('error', (e)=>{
-        console.error('MongoDB error details: '+e);
+    db.on('error', (e) => {
+        console.error('MongoDB error details: ' + e);
         process.exit();
     })
-}else{
-    console.error('Mongodb url required.')
+} else {
+    console.error('Mongodb url required.');
+    process.exit();
 }
 
 const { addShop, getShopsbyLocality, getShopsbyCategory, getShopsbyRating, updateShop, delShop } = require('./routes/shop.route');
+//Below are CRUD operations.
 //CREATE API
 addShop(app);
 //READ API
@@ -39,6 +41,6 @@ updateShop(app);
 //DELETE API
 delShop(app);
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Find my shop application listening at http://localhost:${PORT}/`);
 })
