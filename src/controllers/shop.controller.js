@@ -51,13 +51,15 @@ const listShopsbyLocality = async (req, res) => {
 const listShopsbyCategory = async (req, res) => {
     try {
         const queryParam = {};
-        if(req.body.categories && req.body.categories.length > 0){
-            queryParam['categories'] = {'$in': req.body.categories};
+
+        if(req.query.category && req.query.category.length > 0){
+            queryParam['categories'] = Array.isArray(req.query.category) ? req.query.category : [req.query.category];
         }else{
             return res.status(400).send({
                 message: "Bad request"
             })
         }
+        //console.log(req.query, queryParam);
         const shops = await shopModel.find(queryParam);
         res.status(200).send(shops);
     } catch (error) {

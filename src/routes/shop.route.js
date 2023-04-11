@@ -3,8 +3,11 @@ const { listShopsbyCategory, listShopsbyLocality, listShopsbyRating, updateShopD
 const getShopsbyLocality = (app) => {
     app.get('/fms/api/v1/getShopbyzip', listShopsbyLocality);
 }
+const getShopsbyCategory = (app) => {
+    app.get('/fms/api/v1/getShopbyCat', listShopsbyCategory);
+}
 const addShop = (app) => {
     app.put('/fms/api/v1/addShop', addNewShop);
 }
 
-module.exports =  { addShop, getShopsbyLocality }
+module.exports =  { addShop, getShopsbyLocality, getShopsbyCategory }
