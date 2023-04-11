@@ -5,14 +5,13 @@ const shopSchema = mongoose.Schema({
        type: String,
        required: true 
     },
-    category:{
-        type: [mongoose.SchemaTypes.ObjectId],
-        ref: "Category",
+    categories:{
+        type: [String],
         required: true
     },
     rating: {
         type: Number,
-        required: true
+        default: 0
     },
     address: {
         type: String,
@@ -28,4 +27,4 @@ const shopSchema = mongoose.Schema({
     }
 });
 
-export default mongoose.model("Shop", shopSchema, "Shop");
+module.exports = mongoose.model("Shop", shopSchema, "Shop");

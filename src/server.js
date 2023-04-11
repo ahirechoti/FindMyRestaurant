@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 4040;
-if(PORT.env.MONGOCLIENT){
-    mongoose.connect(PORT.env.MONGOCLIENT, {
+if(process.env.MONGOCLIENT){
+    mongoose.connect(process.env.MONGOCLIENT, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: 'FINDMYSHOPDB'
@@ -27,6 +27,8 @@ if(PORT.env.MONGOCLIENT){
     console.error('Mongodb url required.')
 }
 
+const { addShop } = require('./routes/shop.route');
+addShop(app);
 
 
 app.listen(PORT, ()=>{
