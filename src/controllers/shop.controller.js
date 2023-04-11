@@ -31,8 +31,8 @@ const addNewShop = async (req, res) => {
 const listShopsbyLocality = async (req, res) => {
     try {
         const queryParam = {};
-        if(req.body.zipcode){
-            queryParam['zipcode'] = req.body.zipcode;
+        if(req.query.zipcode){
+            queryParam['zipcode'] = req.query.zipcode;
         }else{
             return res.status(400).send({
                 message: "Bad request"
