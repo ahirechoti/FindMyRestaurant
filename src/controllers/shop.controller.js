@@ -1,8 +1,10 @@
 const shopModel = require('../models/shop.model');
+const {shopObject, ratingComparisionCOnstants} = require('../utils/shop.util');
 
 const addNewShop = async (req, res) => {
     try {
         const shopObj = {
+            id: req.body.id,
             name: req.body.name,
             categories: req.body.categories,
             address: req.body.address,
@@ -18,7 +20,7 @@ const addNewShop = async (req, res) => {
         await shop.save();
         res.status(200).send({
             message: "Shop added suuccsfully",
-            shop: shop
+            shop: shopObject(shop)
         });
     } catch (error) {
         console.error("Error details: " + error);
@@ -39,7 +41,7 @@ const listShopsbyLocality = async (req, res) => {
             })
         }
         const shops = await shopModel.find(queryParam);
-        res.status(200).send(shops);
+        res.status(200).send(shopObject(shops));
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({
@@ -61,7 +63,7 @@ const listShopsbyCategory = async (req, res) => {
         }
         //console.log(req.query, queryParam);
         const shops = await shopModel.find(queryParam);
-        res.status(200).send(shops);
+        res.status(200).send(shopObject(shops));
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({
@@ -73,16 +75,18 @@ const listShopsbyCategory = async (req, res) => {
 const listShopsbyRating = async (req, res) => {
     try {
         const queryParam = {};
-        if(req.body.rating){
-            let logic = req.body.logic || '$gte';
-            queryParam['rating'] = {logic : req.body.rating};
-        }else{
+        if(!req.query.rating || !req.query.logic || !ratingComparisionCOnstants[req.query.logic]){
             return res.status(400).send({
                 message: "Bad request"
             })
+        }else{
+            let queryLogic = ratingComparisionCOnstants[req.query.logic];
+            queryParam['rating'] = {};
+            queryParam.rating[queryLogic] = req.query.rating;
         }
+        //console.log(queryParam);
         const shops = await shopModel.find(queryParam);
-        res.status(200).send(shops);
+        res.status(200).send(shopObject(shops));
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({
@@ -93,7 +97,23 @@ const listShopsbyRating = async (req, res) => {
 
 const updateShopDetails = async (req, res) => {
     try {
-
+        if(req.body.id){
+            const shop = await shopModel.findOne({'id': req.body.id});
+            shop.name = req.body.name || shop.name;
+            shop.rating = req.body.rating || shop.rating;
+            shop.address = req.body.address || shop.address;
+            shop.zipcode = req.body.zipcode || shop.zipcode;
+            shop.categories = req.body.categories || shop.categories;
+            await shop.save();
+            res.status(200).send({
+                message: "Shop details has been updated",
+                shop: shopObject(shop)
+            })
+        }else{
+            res.status(400).send({
+                message: "Bad request"
+            })
+        }
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({
@@ -104,7 +124,28 @@ const updateShopDetails = async (req, res) => {
 
 const deleteShop = async (req, res) => {
     try {
+        const queryParam = {};
+        if(req.body.id){
+            queryParam['id']= req.body.id;
+        }else{
+            return res.status(400).send({
+                message: "Bad request"
+            })
+        }
 
+        const shop = await shopModel.findOne(queryParam);
+        if(!shop){
+            res.status(500).send({
+                message: `Shop with id ${req.body.id} does not exists`
+            })
+        }else{
+            await shopModel.findOneAndDelete(queryParam);
+            res.status(200).send({
+                message: `Shop details with id ${queryParam['id']} has been deleted successfully.`
+                
+            })
+        }
+       
     } catch (error) {
         console.error("Error details: " + error);
         return res.status(500).send({

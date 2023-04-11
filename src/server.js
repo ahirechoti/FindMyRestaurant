@@ -27,10 +27,17 @@ if(process.env.MONGOCLIENT){
     console.error('Mongodb url required.')
 }
 
-const { addShop, getShopsbyLocality, getShopsbyCategory } = require('./routes/shop.route');
+const { addShop, getShopsbyLocality, getShopsbyCategory, getShopsbyRating, updateShop, delShop } = require('./routes/shop.route');
+//CREATE API
 addShop(app);
+//READ API
 getShopsbyLocality(app);
 getShopsbyCategory(app);
+getShopsbyRating(app);
+//Update API
+updateShop(app);
+//DELETE API
+delShop(app);
 
 app.listen(PORT, ()=>{
     console.log(`Find my shop application listening at http://localhost:${PORT}/`);
