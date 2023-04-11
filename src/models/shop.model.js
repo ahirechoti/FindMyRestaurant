@@ -5,7 +5,8 @@ const shopSchema = mongoose.Schema({
     id: {
         type: Number,
         required: true,
-        unique: true
+        unique: true,
+        min: 1
     },
     name: {
         type: String,
@@ -28,7 +29,8 @@ const shopSchema = mongoose.Schema({
         unique: true
     },
     zipcode: {
-        type: Number,
+        type:String, 
+        match: /^[1-9][0-9]{5}$/, 
         required: true
     },
     createdAt: {

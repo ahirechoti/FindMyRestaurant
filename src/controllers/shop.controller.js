@@ -54,8 +54,13 @@ const listShopsbyCategory = async (req, res) => {
     try {
         const queryParam = {};
 
-        if (req.query.category && req.query.category.length > 0) {
-            queryParam['categories'] = Array.isArray(req.query.category) ? req.query.category : [req.query.category];
+        if ((req.query.category && req.query.category.length > 0) || (!req.query.searchType && ["ANY", "ONLY"].indexOf(req.query.searchType) == -1)) {
+            if(req.query.searchType == "ANY"){
+                queryParam['categories'] = {'$elemMatch' : {'$eq': req.query.category}};
+            }else{
+                queryParam['categories'] = Array.isArray(req.query.category) ? req.query.category : [req.query.category];
+            }
+            
         } else {
             return res.status(400).send({
                 message: "Bad request"
