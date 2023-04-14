@@ -45,7 +45,8 @@ restRoute.getRestaurantbyrating(app);
 restRoute.updateRestDetails(app);
 
 //DELETE API
-//delShop(app);
+restRoute.deleteRestByID(app);
+restRoute.deleteAllRestaurant(app);
 
 app.listen(PORT, () => {
     console.log(`Find my shop application listening at http://localhost:${PORT}/`);

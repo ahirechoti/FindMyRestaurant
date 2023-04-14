@@ -150,12 +150,40 @@ const updateRestaurantDetails = async (req, res) => {
     }
 }
 
+const deleteRestaurant = async (req, res) => {
+    try {
+        if(!req.params.id){
+            //delete all the existing restaurant.
+            const result = await restModel.deleteMany() || null;
+            return res.status(httpStatus.HTTP_OK).json({
+                restaurant: result,
+                message: "Restaurants deleted successfully."
+            })
+        }else{
+            //delete restaurant by ID.
+            const queryParam = {
+                "_id" : req.params.id
+            }
+            const result = await restModel.findOneAndDelete(queryParam) || null;
+            return res.status(httpStatus.HTTP_OK).json({
+                restaurant: result,
+                message: "Restaurant deleted successfully."
+            })
+        }
+    } catch (error) {
+        console.error("Some error occurred while deleting Restaurant:", error);
+        res.status(httpStatus.HTTP_INTERNAL_SERVER_ERROR).send({
+            message: "Some error occured while deleting the Restaurant."
+        })
+    }
+}
 const restContrller = { 
     addRestaurant, 
     fetchAllRest, 
     fetchRestaurantbyCat, 
     fetchRestaurantbyId, 
     fetchRestaurantbyrating,
-    updateRestaurantDetails
+    updateRestaurantDetails,
+    deleteRestaurant
  };
 module.exports = restContrller;

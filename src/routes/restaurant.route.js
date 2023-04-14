@@ -22,14 +22,22 @@ const getRestaurantbyrating = (app) => {
 const updateRestDetails = (app) => {
     app.put('/api/restaurant/:id', restController.updateRestaurantDetails);
 }
-const restRoute = { 
+const deleteRestByID = (app) => {
+    app.delete('/api/restaurant/:id', restController.deleteRestaurant);
+}
+const deleteAllRestaurant = (app) => {
+    app.delete('/api/restaurant/', restController.deleteRestaurant);
+}
+const restRoute = {  
     addRest, 
     getAllRetaurant, 
     getRestaurantbyCategories, 
     getRestaurantbyCategory, 
     getRestaurantbyID, 
     getRestaurantbyrating,
-    updateRestDetails
+    updateRestDetails,
+    deleteRestByID,
+    deleteAllRestaurant
  };
 
 module.exports = restRoute;
