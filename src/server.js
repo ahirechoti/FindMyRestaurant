@@ -9,8 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 4040;
-if (process.env.MONGOCLIENT) {
-    mongoose.connect(process.env.MONGOCLIENT, {
+mongoose.connect((process.env.MONGOCLIENT || 'mongodb://127.0.0.1:27017'), {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: 'FINDMYRESTAURANTDB'
@@ -23,10 +22,6 @@ if (process.env.MONGOCLIENT) {
         console.error('MongoDB error details: ' + e);
         process.exit();
     })
-} else {
-    console.error('Mongodb url required.');
-    process.exit();
-}
 
 const restRoute = require('./routes/restaurant.route');
 //Below are CRUD operations.
