@@ -1,5 +1,5 @@
 {
-  "name": "findmyspotapp",
+  "name": "findmyrestaurant",
   "version": "1.0.0",
   "description": "This application helps travellers find shopping complexes for cheap and affordable clothes",
   "main": "server.js",
@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "http-response-codes": "^1.0.4",
     "mongodb": "^5.2.0",
     "mongoose": "^7.0.3"
   }

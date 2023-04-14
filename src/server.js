@@ -13,7 +13,7 @@ if (process.env.MONGOCLIENT) {
     mongoose.connect(process.env.MONGOCLIENT, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        dbName: 'FINDMYSHOPDB'
+        dbName: 'FINDMYRESTAURANTDB'
     });
     const db = mongoose.connection;
     db.once('open', () => {
@@ -28,18 +28,23 @@ if (process.env.MONGOCLIENT) {
     process.exit();
 }
 
-const { addShop, getShopsbyLocality, getShopsbyCategory, getShopsbyRating, updateShop, delShop } = require('./routes/shop.route');
+const restRoute = require('./routes/restaurant.route');
 //Below are CRUD operations.
+
 //CREATE API
-addShop(app);
+restRoute.addRest(app);
+
 //READ API
-getShopsbyLocality(app);
-getShopsbyCategory(app);
-getShopsbyRating(app);
+restRoute.getAllRetaurant(app);
+restRoute.getRestaurantbyCategories(app);
+restRoute.getRestaurantbyCategory(app);
+restRoute.getRestaurantbyID(app);
+restRoute.getRestaurantbyrating(app);
+
 //Update API
-updateShop(app);
+//updateShop(app);
 //DELETE API
-delShop(app);
+//delShop(app);
 
 app.listen(PORT, () => {
     console.log(`Find my shop application listening at http://localhost:${PORT}/`);
