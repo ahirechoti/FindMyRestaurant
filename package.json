@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahirechoti/FindMySpotApp.git"
+    "url": "git+https://github.com/ahirechoti/FindMyRestaurant.git"
   },
   "author": "Abhishek H V",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ahirechoti/FindMySpotApp/issues"
+    "url": "https://github.com/ahirechoti/FindMyRestaurant/issues"
   },
-  "homepage": "https://github.com/ahirechoti/FindMySpotApp#readme",
+  "homepage": "https://github.com/ahirechoti/FindMyRestaurant#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
