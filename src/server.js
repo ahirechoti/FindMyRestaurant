@@ -42,7 +42,8 @@ restRoute.getRestaurantbyID(app);
 restRoute.getRestaurantbyrating(app);
 
 //Update API
-//updateShop(app);
+restRoute.updateRestDetails(app);
+
 //DELETE API
 //delShop(app);
 

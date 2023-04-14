@@ -19,7 +19,18 @@ const getRestaurantbyID = (app) => {
 const getRestaurantbyrating = (app) => {
     app.get('/api/restaurant/rating/:ratingValue', restController.fetchRestaurantbyrating);
 }
-const restRoute = { addRest, getAllRetaurant, getRestaurantbyCategories, getRestaurantbyCategory, getRestaurantbyID, getRestaurantbyrating };
+const updateRestDetails = (app) => {
+    app.put('/api/restaurant/:id', restController.updateRestaurantDetails);
+}
+const restRoute = { 
+    addRest, 
+    getAllRetaurant, 
+    getRestaurantbyCategories, 
+    getRestaurantbyCategory, 
+    getRestaurantbyID, 
+    getRestaurantbyrating,
+    updateRestDetails
+ };
 
 module.exports = restRoute;
 

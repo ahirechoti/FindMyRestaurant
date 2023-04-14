@@ -116,7 +116,32 @@ const fetchRestaurantbyrating = async (req, res) => {
 
 const updateRestaurantDetails = async (req, res) => {
     try {
-        
+        if(!req.body || !req.params.id){
+            return res.status(httpStatus.HTTP_BAD_REQUEST).send({
+                message: "Restaurant data is required."
+            })
+        }
+        const queryParam = {
+            "_id" : req.params.id
+        }
+        const restResult = await restModel.findOne(queryParam);
+        if(!restResult){
+            return res.status(httpStatus.HTTP_OK).send({
+                message: "No Restaurant found for given ID."
+            })
+        }
+        restResult.name = req.body.name || restResult.name;
+        restResult.description = req.body.description || restResult.description;
+        restResult.category = req.body.category || restResult.category;
+        restResult.imageURL = req.body.imageURL || restResult.imageURL;
+        restResult.location = req.body.location || restResult.location;
+        restResult.phone = req.body.phone || restResult.phone;
+        restResult.rating = req.body.rating || restResult.rating;
+        restResult.updatedAt = Date.now();
+        //await restResult.update();
+        return res.status(httpStatus.HTTP_OK).send({
+            message: "Restaurant updated successfully."
+        })
     } catch (error) {
         console.error("Some error occurred while fetching Restaurant:", error);
         res.status(httpStatus.HTTP_INTERNAL_SERVER_ERROR).send({
